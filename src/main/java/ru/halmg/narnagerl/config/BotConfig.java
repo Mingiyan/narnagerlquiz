@@ -10,8 +10,7 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.ApiContext;
 import ru.halmg.narnagerl.bot.NarnaGerlQuizBot;
-import ru.halmg.narnagerl.service.command.Command;
-import ru.halmg.narnagerl.service.command.CommandListener;
+import ru.halmg.narnagerl.service.command.*;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
@@ -64,12 +63,10 @@ public class BotConfig {
     }
 
     @Bean
-    public HashMap<CommandType, Command> activeCommandHashMap(AddTagCommand addTagCommand,
-                                                              AddQuestionCommand addQuestionCommand,
+    public HashMap<CommandType, Command> activeCommandHashMap(DropLevelCommand dropLevelCommand,
                                                               StartQuizCommand startQuizCommand) {
         HashMap<CommandType, Command> activeCommandHashMap = new HashMap<>();
-        activeCommandHashMap.put(CommandType.ADD_TAG, addTagCommand);
-        activeCommandHashMap.put(CommandType.ADD_QUESTION, addQuestionCommand);
+        activeCommandHashMap.put(CommandType.DROP_LEVEL, dropLevelCommand);
         activeCommandHashMap.put(CommandType.START_QUIZ, startQuizCommand);
 
         return activeCommandHashMap;
