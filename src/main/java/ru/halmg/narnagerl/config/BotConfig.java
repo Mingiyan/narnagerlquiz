@@ -9,9 +9,13 @@ import org.springframework.context.annotation.Profile;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.ApiContext;
+import ru.halmg.narnagerl.bot.NarnaGerlQuizBot;
+import ru.halmg.narnagerl.service.command.Command;
+import ru.halmg.narnagerl.service.command.CommandListener;
 
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.util.HashMap;
 
 @Configuration
 public class BotConfig {
@@ -44,7 +48,7 @@ public class BotConfig {
         options.setProxyHost(proxyProperties.getHost());
         options.setProxyPort(proxyProperties.getPort());
         options.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
-        return new GeekFactoryQuizBot(options, botToken, botUserName, commandListener);
+        return new NarnaGerlQuizBot(options, botToken, botUserName, commandListener);
     }
 
     @Bean
@@ -54,7 +58,7 @@ public class BotConfig {
         if (botBaseUrl != null && !botBaseUrl.isEmpty()) {
             options.setBaseUrl(botBaseUrl);
         }
-        return new GeekFactoryQuizBot(
+        return new NarnaGerlQuizBot(
                 options,
                 botToken, botUserName, commandListener);
     }
