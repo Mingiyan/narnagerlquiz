@@ -1,9 +1,11 @@
 package ru.halmg.narnagerl.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 import ru.halmg.narnagerl.service.command.SessionContext;
 
-public interface SessionRepository extends JpaRepository<SessionContext, Long> {
+@Repository
+public interface SessionRepository extends MongoRepository<SessionContext, String>{
 
-    SessionContext findByChatId(Long id);
+    SessionContext findByChatId(Long chatId);
 }

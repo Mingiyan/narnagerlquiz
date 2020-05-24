@@ -3,28 +3,24 @@ package ru.halmg.narnagerl.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "question_tbl")
+@NoArgsConstructor
 public class Question {
 
     @Id
-    @GeneratedValue
-    private Long questionId;
+    private String id;
 
-    @Column(name = "message")
-    private String message;
+    private String question;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
     private List<Answer> answers;
 
-    @Column(name = "level", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Level level;
+    private Answer correctAnswer;
+
+    private Set<Tag> tags;
 }

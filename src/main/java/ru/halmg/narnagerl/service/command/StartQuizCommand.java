@@ -9,16 +9,16 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import ru.halmg.narnagerl.model.Question;
-import ru.halmg.narnagerl.service.QuestionService;
+import ru.halmg.narnagerl.repository.SessionRepository;
 import ru.halmg.narnagerl.service.button.AnswerButtonsService;
-import ru.halmg.narnagerl.service.util.TelegramUtils;
+import ru.halmg.narnagerl.service.QuestionService;
+import ru.halmg.narnagerl.service.utils.TelegramUtils;
 
 @Service
 @RequiredArgsConstructor
-public class StartQuizCommand implements Command{
+public class StartQuizCommand implements Command {
 
-
-
+    private final SessionRepository sessionRepository;
     private final QuestionService questionService;
     private final AnswerButtonsService answerButtonsService;
 
@@ -27,14 +27,18 @@ public class StartQuizCommand implements Command{
 
     @Override
     public String commandDescription() {
-        return null;
+        return "Запустить quiz";
     }
 
     @Override
     public String commandName() {
-        return null;
+        return "/startQuiz";
     }
 
+    @Override
+    public boolean isPublic() {
+        return true;
+    }
 
     @Override
     public BotApiMethod execute(SessionContext context) {
@@ -43,7 +47,7 @@ public class StartQuizCommand implements Command{
         context.setActiveCommand(CommandType.START_QUIZ);
         Question question = questionService.startQuiz(quizContext);
         InlineKeyboardMarkup answerButtons = answerButtonsService.buildQuestion(question);
-        return new SendMessage(context.getChatId(), question.getMessage()).setReplyMarkup(answerButtons);
+        return new SendMessage(context.getChatId(), question.getQuestion()).setReplyMarkup(answerButtons);
     }
 
     @Override
@@ -54,7 +58,7 @@ public class StartQuizCommand implements Command{
         Question question = questionService.processQuiz(context.getQuizContext(), update.getCallbackQuery());
         if (question != null) {
             InlineKeyboardMarkup answerButtons = answerButtonsService.buildQuestion(question);
-            method = new SendMessage(context.getChatId(), question.getMessage()).setReplyMarkup(answerButtons);
+            method = new SendMessage(context.getChatId(), question.getQuestion()).setReplyMarkup(answerButtons);
         } else {
             SendMessage sendMessage = new SendMessage(incomingMsg.getChatId(),
                     "Правильных ответов " + context.getQuizContext().getCorrectAnswers() + "/" +
@@ -67,8 +71,4 @@ public class StartQuizCommand implements Command{
         return method;
     }
 
-    @Override
-    public boolean isPublic() {
-        return true;
-    }
 }

@@ -1,4 +1,4 @@
-package ru.halmg.narnagerl.config;
+package ru.halmg.narnagerl.configs;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

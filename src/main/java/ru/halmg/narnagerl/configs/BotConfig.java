@@ -1,5 +1,4 @@
-package ru.halmg.narnagerl.config;
-
+package ru.halmg.narnagerl.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,13 +62,14 @@ public class BotConfig {
     }
 
     @Bean
-    public HashMap<CommandType, Command> activeCommandHashMap(DropLevelCommand dropLevelCommand,
+    public HashMap<CommandType, Command> activeCommandHashMap(AddTagCommand addTagCommand,
+                                                              AddQuestionCommand addQuestionCommand,
                                                               StartQuizCommand startQuizCommand) {
         HashMap<CommandType, Command> activeCommandHashMap = new HashMap<>();
-        activeCommandHashMap.put(CommandType.DROP_LEVEL, dropLevelCommand);
+        activeCommandHashMap.put(CommandType.ADD_TAG, addTagCommand);
+        activeCommandHashMap.put(CommandType.ADD_QUESTION, addQuestionCommand);
         activeCommandHashMap.put(CommandType.START_QUIZ, startQuizCommand);
 
         return activeCommandHashMap;
     }
-
 }

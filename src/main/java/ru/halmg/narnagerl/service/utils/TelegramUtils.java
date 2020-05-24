@@ -1,4 +1,4 @@
-package ru.halmg.narnagerl.service.util;
+package ru.halmg.narnagerl.service.utils;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;

@@ -10,5 +10,4 @@ public interface Command {
     BotApiMethod execute(SessionContext context);
     BotApiMethod process(SessionContext context, Update update);
     boolean isPublic();
-
 }

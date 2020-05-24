@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class HelpCommand implements Command {
-
     private final Set<Command> allCommands;
 
     @Override
@@ -49,5 +48,4 @@ public class HelpCommand implements Command {
     private String getCommandDisplayName(Command command) {
         return command.commandName() + " -- " + command.commandDescription();
     }
-
 }

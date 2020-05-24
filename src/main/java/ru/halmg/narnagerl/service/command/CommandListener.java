@@ -1,20 +1,15 @@
 package ru.halmg.narnagerl.service.command;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
-import ru.halmg.narnagerl.model.Question;
 import ru.halmg.narnagerl.repository.SessionRepository;
-import ru.halmg.narnagerl.repository.UserRepository;
 import ru.halmg.narnagerl.service.QuestionService;
 import ru.halmg.narnagerl.service.button.AnswerButtonsService;
-import ru.halmg.narnagerl.service.util.TelegramUtils;
+import ru.halmg.narnagerl.service.utils.TelegramUtils;
 
 import java.util.HashMap;
 
@@ -22,35 +17,34 @@ import java.util.HashMap;
 public class CommandListener {
 
     private HelpCommand helpCommand;
-    private DropLevelCommand dropLevelCommand;
     private StartQuizCommand startQuizCommand;
     private QuestionService questionService;
     private AnswerButtonsService answerButtonsService;
     private SessionRepository sessionRepository;
-    private UserRepository userRepository;
-    private TelegramUtils telegramUtils;
+    private AddQuestionCommand addQuestionCommand;
+    private AddTagCommand addTagCommand;
     private HashMap<CommandType, Command> activeCommandHashMap;
+    private TelegramUtils telegramUtils;
 
     @Autowired
     public CommandListener(HelpCommand helpCommand,
-                           TelegramUtils telegramUtils,
-                           SessionRepository sessionRepository,
-                           HashMap<CommandType, Command> activeCommandHashMap,
                            StartQuizCommand startQuizCommand,
-                           DropLevelCommand dropLevelCommand,
                            QuestionService questionService,
                            AnswerButtonsService answerButtonsService,
-                           UserRepository userRepository) {
+                           SessionRepository sessionRepository,
+                           AddQuestionCommand addQuestionCommand,
+                           AddTagCommand addTagCommand,
+                           HashMap<CommandType, Command> activeCommandHashMap,
+                           TelegramUtils telegramUtils) {
         this.helpCommand = helpCommand;
-        this.dropLevelCommand = dropLevelCommand;
-        this.telegramUtils = telegramUtils;
-        this.activeCommandHashMap = activeCommandHashMap;
         this.startQuizCommand = startQuizCommand;
-        this.sessionRepository = sessionRepository;
         this.questionService = questionService;
         this.answerButtonsService = answerButtonsService;
-        this.userRepository = userRepository;
-
+        this.sessionRepository = sessionRepository;
+        this.addQuestionCommand = addQuestionCommand;
+        this.addTagCommand = addTagCommand;
+        this.activeCommandHashMap = activeCommandHashMap;
+        this.telegramUtils = telegramUtils;
     }
 
     public BotApiMethod getCommand(Update update) throws TelegramApiRequestException {
@@ -70,6 +64,12 @@ public class CommandListener {
                 break;
             case "/startQuiz":
                 method = startQuizCommand.execute(context);
+                break;
+            case "/addQuestion":
+                method = addQuestionCommand.execute(context);
+                break;
+            case "/addTag":
+                method = addTagCommand.execute(context);
                 break;
             default:
                 if (context.getActiveCommand() != null) {

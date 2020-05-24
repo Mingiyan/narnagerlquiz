@@ -1,5 +1,6 @@
 package ru.halmg.narnagerl.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.halmg.narnagerl.model.Question;
@@ -12,12 +13,8 @@ import java.util.Random;
 @Service
 public class QuestionService {
 
+    @Autowired
     private QuestionRepository questionRepository;
-
-    public QuestionService(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
-
 
     public Question startQuiz(QuizContext quizContext) {
         Question question = getRandomQuestion();
@@ -44,14 +41,12 @@ public class QuestionService {
 
     private Question getRandomQuestion() {
         Random random = new Random();
-        List<Question> questionList = findRandomTenQuestion();
-        int number = random.nextInt(questionList.size());
-        Question question = questionList.get(number);
-        questionList.remove(number);
-        return question;
+        List<Question> questionList = questionRepository.findAll();
+        return questionList.get(random.nextInt(questionList.size()));
     }
 
-    public List<Question> findRandomTenQuestion() {
-        return questionRepository.findRandomQuestion();
+    public void saveQuestion(Question question) {
+        questionRepository.save(question);
     }
 }
+
