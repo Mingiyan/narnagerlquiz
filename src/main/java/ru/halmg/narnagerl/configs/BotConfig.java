@@ -23,7 +23,7 @@ public class BotConfig {
     @Value("${BOT_USERNAME}")
     private String botUserName;
 
-    @Value("${BOT_BASE_URL:}")
+    @Value("${BOT_BASE_URL}")
     private String botBaseUrl;
 
     @Autowired
