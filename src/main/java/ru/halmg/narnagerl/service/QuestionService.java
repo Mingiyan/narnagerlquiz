@@ -42,7 +42,10 @@ public class QuestionService {
     private Question getRandomQuestion() {
         Random random = new Random();
         List<Question> questionList = questionRepository.findAll();
-        return questionList.get(random.nextInt(questionList.size()));
+        int number = random.nextInt(questionList.size());
+        Question question = questionList.get(number);
+        questionList.remove(number);
+        return question;
     }
 
     public void saveQuestion(Question question) {
