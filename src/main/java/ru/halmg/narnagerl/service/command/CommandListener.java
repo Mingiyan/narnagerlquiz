@@ -58,11 +58,11 @@ public class CommandListener {
         }
 
         BotApiMethod method;
-        switch (incomingMsg.getText()) {
-            case "/help":
+        switch (update.getCallbackQuery().getData()) {
+            case "help":
                 method = helpCommand.execute(context);
                 break;
-            case "/startQuiz":
+            case "startQuiz":
                 method = startQuizCommand.execute(context);
                 break;
             case "/addQuestion":

@@ -5,7 +5,12 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,13 +36,23 @@ public class HelpCommand implements Command {
 
     @Override
     public BotApiMethod execute(SessionContext context) {
-        String msg = allCommands.stream()
-                .filter(Command::isPublic)
-                .map(this::getCommandDisplayName)
-                .collect(Collectors.joining("\n"));
-        msg = getCommandDisplayName(this) + "\n" + msg;
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+//        List<String> commands = allCommands.stream()
+//                .filter(Command::isPublic)
+//                .map(this::getCommandDisplayName)
+//                .collect(Collectors.toList());
+//        commands.add(0, getCommandDisplayName(this));
+        List<InlineKeyboardButton> menuButtons = new ArrayList<>();
+        menuButtons.add(new InlineKeyboardButton().setText("help").setCallbackData("help"));
+        menuButtons.add(new InlineKeyboardButton().setText("startQuiz").setCallbackData("startQuiz"));
+
+//                .map(command -> new InlineKeyboardButton().setText(command.replaceAll("/", ""))
+//                        .setCallbackData(command))
+//                .collect(Collectors.toList());
+        inlineKeyboardMarkup.setKeyboard(Collections.singletonList(menuButtons));
+
         context.setActiveCommand(null);
-        return new SendMessage(context.getChatId(), msg);
+        return new SendMessage(context.getChatId(), "Тут приветствие надо").setReplyMarkup(inlineKeyboardMarkup);
     }
 
     @Override
