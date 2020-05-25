@@ -7,6 +7,7 @@ import ru.halmg.narnagerl.model.Question;
 import ru.halmg.narnagerl.repository.QuestionRepository;
 import ru.halmg.narnagerl.service.command.QuizContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -16,7 +17,10 @@ public class QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
 
+    private List<Question> list = new ArrayList<>();
+
     public Question startQuiz(QuizContext quizContext) {
+        list = questionRepository.findAll();
         Question question = getRandomQuestion();
         quizContext.getAskedQuestions().add(question);
         return question;
@@ -41,7 +45,7 @@ public class QuestionService {
 
     private Question getRandomQuestion() {
         Random random = new Random();
-        List<Question> questionList = questionRepository.findAll();
+        List<Question> questionList = list;
         int number = random.nextInt(questionList.size());
         Question question = questionList.get(number);
         questionList.remove(number);

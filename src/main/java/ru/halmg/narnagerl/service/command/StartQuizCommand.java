@@ -18,7 +18,6 @@ import ru.halmg.narnagerl.service.utils.TelegramUtils;
 @RequiredArgsConstructor
 public class StartQuizCommand implements Command {
 
-    private final SessionRepository sessionRepository;
     private final QuestionService questionService;
     private final AnswerButtonsService answerButtonsService;
 
