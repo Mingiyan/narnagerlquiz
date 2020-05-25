@@ -18,6 +18,7 @@ public class AnswerButtonsService {
                 .stream().map(answer -> new InlineKeyboardButton().setText(answer.getAnswer()).setCallbackData(answer.getAnswer()))
                 .collect(Collectors.toList());
 
+        Collections.shuffle(keyboardButtons);
         inlineKeyboardMarkup.setKeyboard(Collections.singletonList(keyboardButtons));
 
         return inlineKeyboardMarkup;
