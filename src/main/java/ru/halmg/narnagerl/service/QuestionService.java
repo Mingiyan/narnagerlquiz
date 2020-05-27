@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.halmg.narnagerl.model.Question;
+import ru.halmg.narnagerl.model.Tag;
 import ru.halmg.narnagerl.repository.QuestionRepository;
 import ru.halmg.narnagerl.service.command.QuizContext;
 
@@ -21,6 +22,13 @@ public class QuestionService {
 
     public Question startQuiz(QuizContext quizContext) {
         list = questionRepository.findAll();
+        Question question = getRandomQuestion();
+        quizContext.getAskedQuestions().add(question);
+        return question;
+    }
+
+    public Question startWithTag(QuizContext quizContext, Tag tag) {
+        list = questionRepository.findAllByTags(tag);
         Question question = getRandomQuestion();
         quizContext.getAskedQuestions().add(question);
         return question;

@@ -58,25 +58,29 @@ public class CommandListener {
         }
 
         BotApiMethod method;
-        switch (update.getCallbackQuery().getData()) {
-            case "help":
-                method = helpCommand.execute(context);
-                break;
-            case "startQuiz":
-                method = startQuizCommand.execute(context);
-                break;
-            case "/addQuestion":
-                method = addQuestionCommand.execute(context);
-                break;
-            case "/addTag":
-                method = addTagCommand.execute(context);
-                break;
-            default:
-                if (context.getActiveCommand() != null) {
-                    method = activeCommandHashMap.get(context.getActiveCommand()).process(context, update);
-                } else {
+        if (update.hasMessage()) {
+            method = helpCommand.execute(context);
+        } else {
+            switch (update.getCallbackQuery().getData()) {
+                case "/help":
                     method = helpCommand.execute(context);
-                }
+                    break;
+                case "/startQuiz":
+                    method = startQuizCommand.execute(context);
+                    break;
+                case "/addQuestion":
+                    method = addQuestionCommand.execute(context);
+                    break;
+                case "/addTag":
+                    method = addTagCommand.execute(context);
+                    break;
+                default:
+                    if (context.getActiveCommand() != null) {
+                        method = activeCommandHashMap.get(context.getActiveCommand()).process(context, update);
+                    } else {
+                        method = helpCommand.execute(context);
+                    }
+            }
         }
         sessionRepository.save(context);
         return method;

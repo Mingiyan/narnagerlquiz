@@ -6,7 +6,10 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,18 +40,14 @@ public class HelpCommand implements Command {
     @Override
     public BotApiMethod execute(SessionContext context) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-//        List<String> commands = allCommands.stream()
-//                .filter(Command::isPublic)
-//                .map(this::getCommandDisplayName)
-//                .collect(Collectors.toList());
-//        commands.add(0, getCommandDisplayName(this));
-        List<InlineKeyboardButton> menuButtons = new ArrayList<>();
-        menuButtons.add(new InlineKeyboardButton().setText("help").setCallbackData("help"));
-        menuButtons.add(new InlineKeyboardButton().setText("startQuiz").setCallbackData("startQuiz"));
 
-//                .map(command -> new InlineKeyboardButton().setText(command.replaceAll("/", ""))
-//                        .setCallbackData(command))
-//                .collect(Collectors.toList());
+        List<InlineKeyboardButton> menuButtons = new ArrayList<>();
+        menuButtons.add(new InlineKeyboardButton().setText("help").setCallbackData("/help"));
+        menuButtons.add(new InlineKeyboardButton().setText("startQuiz").setCallbackData("/startQuiz"));
+        menuButtons.add(new InlineKeyboardButton().setText("фильмы").setCallbackData("/startQuizFilm"));
+        menuButtons.add(new InlineKeyboardButton().setText("мультфильмы").setCallbackData("/startQuizMultfilm"));
+        menuButtons.add(new InlineKeyboardButton().setText("клипы").setCallbackData("/startQuizClips"));
+        menuButtons.add(new InlineKeyboardButton().setText("прочее").setCallbackData("/startQuizOther"));
         inlineKeyboardMarkup.setKeyboard(Collections.singletonList(menuButtons));
 
         context.setActiveCommand(null);
