@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>ru.geekfactory</groupId>
-    <artifactId>telegram-bot-quiz</artifactId>
+    <groupId>ru.halmg.narnagerl</groupId>
+    <artifactId>narnagerlquizbot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>telegram-bot-quiz</name>
+    <name>narnagerlquizbot</name>
 
     <properties>
         <java.version>1.8</java.version>
