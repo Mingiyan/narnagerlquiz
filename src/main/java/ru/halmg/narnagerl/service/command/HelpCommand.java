@@ -41,14 +41,20 @@ public class HelpCommand implements Command {
     public BotApiMethod execute(SessionContext context) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
+        List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> menuButtons = new ArrayList<>();
         menuButtons.add(new InlineKeyboardButton().setText("help").setCallbackData("/help"));
         menuButtons.add(new InlineKeyboardButton().setText("startQuiz").setCallbackData("/startQuiz"));
-        menuButtons.add(new InlineKeyboardButton().setText("фильмы").setCallbackData("/startQuizFilm"));
-        menuButtons.add(new InlineKeyboardButton().setText("мультфильмы").setCallbackData("/startQuizMultfilm"));
-        menuButtons.add(new InlineKeyboardButton().setText("клипы").setCallbackData("/startQuizClips"));
-        menuButtons.add(new InlineKeyboardButton().setText("прочее").setCallbackData("/startQuizOther"));
-        inlineKeyboardMarkup.setKeyboard(Collections.singletonList(menuButtons));
+        List<InlineKeyboardButton> tagButtons1 = new ArrayList<>();
+        tagButtons1.add(new InlineKeyboardButton().setText("фильмы").setCallbackData("/startQuizFilm"));
+        tagButtons1.add(new InlineKeyboardButton().setText("мультфильмы").setCallbackData("/startQuizPic"));
+        List<InlineKeyboardButton> tagButtons2 = new ArrayList<>();
+        tagButtons2.add(new InlineKeyboardButton().setText("клипы").setCallbackData("/startQuizClip"));
+        tagButtons2.add(new InlineKeyboardButton().setText("прочее").setCallbackData("/startQuizOther"));
+        buttons.add(menuButtons);
+        buttons.add(tagButtons1);
+        buttons.add(tagButtons2);
+        inlineKeyboardMarkup.setKeyboard(buttons);
 
         context.setActiveCommand(null);
         return new SendMessage(context.getChatId(), "Тут приветствие надо").setReplyMarkup(inlineKeyboardMarkup);
