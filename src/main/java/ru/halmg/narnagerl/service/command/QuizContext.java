@@ -10,5 +10,5 @@ import java.util.List;
 public class QuizContext {
     private List<Question> askedQuestions = new ArrayList<>();
     private int correctAnswers;
-    private int quizSize = 5;
+    private int quizSize = 10;
 }
