@@ -113,7 +113,7 @@ public class StartQuizCommand implements Command {
             buttonBack.setText("На главную").setCallbackData("/help");
             button.add(buttonBack);
             inlineKeyboardMarkup.setKeyboard(Collections.singletonList(button));
-            sendIsCorrect(context.getChatId(), mes);
+            sendIsCorrect(context.getChatId(), mes + "\n<b>" + correctAnswer + "</b>");
             SendMessage sendMessage = new SendMessage(incomingMsg.getChatId(),
                     "Правильных ответов " + context.getQuizContext().getCorrectAnswers() + "/" +
                             context.getQuizContext().getAskedQuestions().size()).setReplyMarkup(inlineKeyboardMarkup);
