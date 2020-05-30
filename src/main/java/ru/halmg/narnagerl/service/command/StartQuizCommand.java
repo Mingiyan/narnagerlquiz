@@ -1,7 +1,7 @@
 package ru.halmg.narnagerl.service.command;
 
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.response.SendResponse;
+import com.pengrad.telegrambot.model.request.ParseMode;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,10 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.halmg.narnagerl.model.Question;
 import ru.halmg.narnagerl.model.Tag;
-import ru.halmg.narnagerl.repository.SessionRepository;
-import ru.halmg.narnagerl.service.button.AnswerButtonsService;
 import ru.halmg.narnagerl.service.QuestionService;
+import ru.halmg.narnagerl.service.button.AnswerButtonsService;
 import ru.halmg.narnagerl.service.utils.TelegramUtils;
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,7 +62,7 @@ public class StartQuizCommand implements Command {
         context.setActiveCommand(CommandType.START_QUIZ);
         Question question = questionService.startQuiz(quizContext);
         InlineKeyboardMarkup answerButtons = answerButtonsService.buildQuestion(question);
-        return new SendMessage(context.getChatId(), question.getQuestion()).setReplyMarkup(answerButtons);
+        return new SendMessage(context.getChatId(), "1. " + question.getQuestion()).setReplyMarkup(answerButtons);
     }
 
     public BotApiMethod executeWithTag(SessionContext context, String tag) {
@@ -76,7 +71,7 @@ public class StartQuizCommand implements Command {
         context.setActiveCommand(CommandType.START_QUIZ);
         Question question = questionService.startWithTag(quizContextTag, new Tag(tag));
         InlineKeyboardMarkup answerButtons = answerButtonsService.buildQuestion(question);
-        return new SendMessage(context.getChatId(), question.getQuestion()).setReplyMarkup(answerButtons);
+        return new SendMessage(context.getChatId(), "1. " + question.getQuestion()).setReplyMarkup(answerButtons);
     }
 
     @Override
@@ -88,9 +83,10 @@ public class StartQuizCommand implements Command {
 
 
         if (question != null) {
+            String correctAnswer = context.getQuizContext().getAskedQuestions()
+                    .get(context.getQuizContext().getAskedQuestions().size() - 2).getCorrectAnswer().getAnswer();
             boolean isCorrect = update.getCallbackQuery().getData()
-                    .equalsIgnoreCase(context.getQuizContext().getAskedQuestions()
-                            .get(context.getQuizContext().getAskedQuestions().size() - 2).getCorrectAnswer().getAnswer());
+                    .equalsIgnoreCase(correctAnswer);
             String mes;
             if (isCorrect) {
                 mes = "\u2705 Чик!";
@@ -98,12 +94,13 @@ public class StartQuizCommand implements Command {
                 mes = "\u274c Уга!";
             }
             InlineKeyboardMarkup answerButtons = answerButtonsService.buildQuestion(question);
-            sendIsCorrect(context.getChatId(), mes);
-            method = new SendMessage(context.getChatId(), question.getQuestion()).setReplyMarkup(answerButtons);
+            sendIsCorrect(context.getChatId(), mes + "\n<b>" + correctAnswer + "</b>");
+            method = new SendMessage(context.getChatId(), context.getQuizContext().getAskedQuestions().size()+ ". " + question.getQuestion()).setReplyMarkup(answerButtons);
         } else {
+            String correctAnswer = context.getQuizContext().getAskedQuestions()
+                    .get(context.getQuizContext().getAskedQuestions().size() - 1).getCorrectAnswer().getAnswer();
             boolean isCorrect = update.getCallbackQuery().getData()
-                    .equalsIgnoreCase(context.getQuizContext().getAskedQuestions()
-                            .get(context.getQuizContext().getAskedQuestions().size() - 1).getCorrectAnswer().getAnswer());
+                    .equalsIgnoreCase(correctAnswer);
             String mes;
             if (isCorrect) {
                 mes = "\u2705 Чик!";
@@ -133,7 +130,9 @@ public class StartQuizCommand implements Command {
         TelegramBot.Builder bot = new TelegramBot.Builder(botToken);
         bot.apiUrl(botBaseUrl);
         TelegramBot bot1 = bot.build();
-        bot1.execute(new com.pengrad.telegrambot.request.SendMessage(chatId, message));
+        com.pengrad.telegrambot.request.SendMessage request = new com.pengrad.telegrambot.request.SendMessage(chatId, message);
+        request.parseMode(ParseMode.HTML);
+        bot1.execute(request);
         Thread.sleep(300);
     }
 }
