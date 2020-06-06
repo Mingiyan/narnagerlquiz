@@ -26,8 +26,12 @@ public class BotConfig {
     @Value("${BOT_BASE_URL}")
     private String botBaseUrl;
 
-    @Autowired
     private CommandListener commandListener;
+
+    @Autowired
+    public BotConfig(CommandListener commandListener) {
+        this.commandListener = commandListener;
+    }
 
     @Bean
     @Profile("proxy")
