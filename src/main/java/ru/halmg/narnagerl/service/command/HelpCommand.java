@@ -43,21 +43,22 @@ public class HelpCommand implements Command {
 
         List<List<InlineKeyboardButton>> buttons = new ArrayList<>();
         List<InlineKeyboardButton> menuButtons = new ArrayList<>();
-        menuButtons.add(new InlineKeyboardButton().setText("help").setCallbackData("/help"));
-        menuButtons.add(new InlineKeyboardButton().setText("startQuiz").setCallbackData("/startQuiz"));
+//        menuButtons.add(new InlineKeyboardButton().setText("help").setCallbackData("/help"));
+        menuButtons.add(new InlineKeyboardButton().setText("Нег тест").setCallbackData("/startQuiz"));
         List<InlineKeyboardButton> tagButtons1 = new ArrayList<>();
-        tagButtons1.add(new InlineKeyboardButton().setText("фильмы").setCallbackData("/startQuizFilm"));
-        tagButtons1.add(new InlineKeyboardButton().setText("мультфильмы").setCallbackData("/startQuizAnimation"));
+        tagButtons1.add(new InlineKeyboardButton().setText("Фильм").setCallbackData("/startQuizFilm"));
+        tagButtons1.add(new InlineKeyboardButton().setText("Мультфильм").setCallbackData("/startQuizAnimation"));
         List<InlineKeyboardButton> tagButtons2 = new ArrayList<>();
-        tagButtons2.add(new InlineKeyboardButton().setText("музыка").setCallbackData("/startQuizMusic"));
-        tagButtons2.add(new InlineKeyboardButton().setText("здоровье").setCallbackData("/startQuizMedicine"));
+        tagButtons2.add(new InlineKeyboardButton().setText("Көгҗм").setCallbackData("/startQuizMusic"));
+        tagButtons2.add(new InlineKeyboardButton().setText("Эрүл-менд").setCallbackData("/startQuizMedicine"));
         buttons.add(menuButtons);
         buttons.add(tagButtons1);
         buttons.add(tagButtons2);
         inlineKeyboardMarkup.setKeyboard(buttons);
 
         context.setActiveCommand(null);
-        return new SendMessage(context.getChatId(), "Тут приветствие надо").setReplyMarkup(inlineKeyboardMarkup);
+        return new SendMessage(context.getChatId(), "Нег әңг эс гиҗ «Нег тест» гидг цуг төрмүдин тест суңһҗ автн.\n" +
+                "Выберите одну из категорий или «Общий тест» - тест по всем темам.\n").setReplyMarkup(inlineKeyboardMarkup);
     }
 
     @Override

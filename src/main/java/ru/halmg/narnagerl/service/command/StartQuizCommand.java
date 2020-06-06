@@ -22,6 +22,7 @@ import ru.halmg.narnagerl.service.utils.TelegramUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -110,13 +111,13 @@ public class StartQuizCommand implements Command {
             InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
             List<InlineKeyboardButton> button = new ArrayList<>();
             InlineKeyboardButton buttonBack = new InlineKeyboardButton();
-            buttonBack.setText("На главную").setCallbackData("/help");
+            buttonBack.setText("Ардагшан").setCallbackData("/help");
             button.add(buttonBack);
             inlineKeyboardMarkup.setKeyboard(Collections.singletonList(button));
             sendIsCorrect(context.getChatId(), mes + "\n<b>" + correctAnswer + "</b>");
             SendMessage sendMessage = new SendMessage(incomingMsg.getChatId(),
-                    "Правильных ответов " + context.getQuizContext().getCorrectAnswers() + "/" +
-                            context.getQuizContext().getAskedQuestions().size()).setReplyMarkup(inlineKeyboardMarkup);
+                    "Чик хәрү " + context.getQuizContext().getCorrectAnswers() + "/" +
+                            context.getQuizContext().getAskedQuestions().size() + "\n\n" + getRandomMessage()).setReplyMarkup(inlineKeyboardMarkup);
             context.setQuizContext(null);
             context.setActiveCommand(null);
             method = sendMessage;
@@ -134,5 +135,15 @@ public class StartQuizCommand implements Command {
         request.parseMode(ParseMode.HTML);
         bot1.execute(request);
         Thread.sleep(300);
+    }
+
+    private String getRandomMessage() {
+        String[] messages = {"Сурврмуд болн седвәр бәәхлә, NarnaGerl гидг Instagram-д орад бичтн, буйн болтха!\n" +
+                "Если у вас есть вопросы и предложения, пишите в Instagram, пожалуйста!\n https://www.instagram.com/narnagerl/",
+        "Энд бәәсн цуг үгмүд мана NarnaGerl гидг Youtube болн Instagram-халхт олҗ чадхвт! Маниг дахтн!\n" +
+                "Все слова из тестов в Телеграм вы сможете найти на наших страницах в Instagram и Youtube!\n Подписывайтесь на нас!\n " +
+                "https://www.instagram.com/narnagerl/\n https://www.youtube.com/channel/UCYXm3kbhD68c7d55pR4mX2Q"};
+
+        return messages[new Random().nextInt(messages.length)];
     }
 }
