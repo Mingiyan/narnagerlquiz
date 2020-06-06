@@ -71,14 +71,14 @@ public class CommandListener {
                 case "/startQuizFilm":
                     method = startQuizCommand.executeWithTag(context, "film");
                     break;
-                case "/startQuizPic":
-                    method = startQuizCommand.executeWithTag(context, "picture");
+                case "/startQuizAnimation":
+                    method = startQuizCommand.executeWithTag(context, "animation");
                     break;
-                case "/startQuizClip":
-                    method = startQuizCommand.executeWithTag(context, "clip");
+                case "/startQuizMusic":
+                    method = startQuizCommand.executeWithTag(context, "music");
                     break;
-                case "/startQuizOther":
-                    method = startQuizCommand.executeWithTag(context, "other");
+                case "/startQuizMedicine":
+                    method = startQuizCommand.executeWithTag(context, "medicine");
                     break;
                 default:
                     if (context.getActiveCommand() != null) {

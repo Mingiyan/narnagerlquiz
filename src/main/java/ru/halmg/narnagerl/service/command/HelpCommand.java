@@ -47,10 +47,10 @@ public class HelpCommand implements Command {
         menuButtons.add(new InlineKeyboardButton().setText("startQuiz").setCallbackData("/startQuiz"));
         List<InlineKeyboardButton> tagButtons1 = new ArrayList<>();
         tagButtons1.add(new InlineKeyboardButton().setText("фильмы").setCallbackData("/startQuizFilm"));
-        tagButtons1.add(new InlineKeyboardButton().setText("мультфильмы").setCallbackData("/startQuizPic"));
+        tagButtons1.add(new InlineKeyboardButton().setText("мультфильмы").setCallbackData("/startQuizAnimation"));
         List<InlineKeyboardButton> tagButtons2 = new ArrayList<>();
-        tagButtons2.add(new InlineKeyboardButton().setText("клипы").setCallbackData("/startQuizClip"));
-        tagButtons2.add(new InlineKeyboardButton().setText("прочее").setCallbackData("/startQuizOther"));
+        tagButtons2.add(new InlineKeyboardButton().setText("музыка").setCallbackData("/startQuizMusic"));
+        tagButtons2.add(new InlineKeyboardButton().setText("здоровье").setCallbackData("/startQuizMedicine"));
         buttons.add(menuButtons);
         buttons.add(tagButtons1);
         buttons.add(tagButtons2);
