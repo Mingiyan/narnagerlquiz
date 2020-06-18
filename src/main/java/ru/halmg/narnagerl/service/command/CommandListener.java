@@ -83,6 +83,9 @@ public class CommandListener {
                 case "/startTodo":
                     method = startQuizCommand.executeWithTag(context, "todo");
                     break;
+                case "/startOther":
+                    method = startQuizCommand.executeWithTag(context, "other");
+                    break;
                 default:
                     if (context.getActiveCommand() != null) {
                         method = activeCommandHashMap.get(context.getActiveCommand()).process(context, update);
