@@ -57,6 +57,7 @@ public class HelpCommand implements Command {
         buttons.add(menuButtons);
         buttons.add(tagButtons1);
         buttons.add(tagButtons2);
+        buttons.add(tagButtons3);
         inlineKeyboardMarkup.setKeyboard(buttons);
 
         context.setActiveCommand(null);
