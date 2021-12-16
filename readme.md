@@ -23,14 +23,15 @@ If during assembly you need to skip unit tests, then you need to add `-DskipTest
 #### Application screenshots:
 
 ##### Start Quiz:
+###### first you have to choose a topic for the quiz (general for all or for sections)
 ![alt text](images/quiz.jpg)
 
 ##### Quiz process:
-as you can see in the screenshot, you are prompted to choose the correct translation option
+###### as you can see in the screenshot, you are prompted to choose the correct translation option
 ![alt text](images/quiz2.jpg)
 
 ##### Final:
-at the end of the quiz, the number of correct answers is displayed
+###### at the end of the quiz, the number of correct answers is displayed
 ![alt text](images/quiz3.jpg)
 
 ##### Link to the bot where you can test quiz:
