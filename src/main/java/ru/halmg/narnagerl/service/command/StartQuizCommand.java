@@ -128,12 +128,12 @@ public class StartQuizCommand implements Command {
 
     @SneakyThrows
     private void sendIsCorrect(Long chatId, String message)  {
-        TelegramBot.Builder bot = new TelegramBot.Builder(botToken);
-        bot.apiUrl(botBaseUrl);
-        TelegramBot bot1 = bot.build();
+        TelegramBot.Builder botBuilder = new TelegramBot.Builder(botToken);
+        botBuilder.apiUrl(botBaseUrl);
+        TelegramBot bot = botBuilder.build();
         com.pengrad.telegrambot.request.SendMessage request = new com.pengrad.telegrambot.request.SendMessage(chatId, message);
         request.parseMode(ParseMode.HTML);
-        bot1.execute(request);
+        bot.execute(request);
         Thread.sleep(300);
     }
 
